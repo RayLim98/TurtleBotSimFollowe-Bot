@@ -12,17 +12,29 @@ def tracker(image):
 	lin = 0
 	ang = 0
 
+	## NO P
+	# def turn(cX):
+	# 	if cX<0 and radius < 100:
+	# 			print("right")
+	# 			return 0.15
+	# 	else: 
+	# 			print("left")
+	# 			return -0.15
+
+	## WITH P
 	def turn(cX):
-		if cX<300 and radius < 100:
-				print("right")
-				return 0.15
-		else: 
+		gain = 2  #CONFIGURABLE 
+		max_ang = 0.3
+		if cX<0 and radius < 50:
 				print("left")
-				return -0.15
+				return -gain*max_ang*cX/300
+		else: 
+				print("right")
+				return -gain*max_ang*cX/300
 
 	def depthy(radius):
 		print(radius)
-		if radius > 100:
+		if radius > 50:
 				cv2.circle(frame, (int(x), int(y)), int(radius),
 					(0, 255, 255), 2)
 				#cv2.circle(frame, center, 5, (0, 0, 255), -1)
@@ -104,7 +116,7 @@ def tracker(image):
 		#cX = int(M["m10"] / M["m00"])
 		#cY = int(M["m01"] / M["m00"])
 		center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
-		cX=center[0]
+		cX=center[0] - 300
 
 			# only proceed if the radius meets a minimum size
 		ang = turn(cX)
